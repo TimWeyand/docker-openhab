@@ -27,6 +27,7 @@ function addons {
   # create new links based on input file
   while read STRING
   do
+    STRING=${STRING%$'\r'}
     echo Processing $STRING...
     if [ -f $SOURCE/$STRING-*.jar ]
     then
@@ -48,7 +49,7 @@ fi
 ###########################################
 # Download Demo if no configuration is given
 
-if [ -f $CONFIG_DIR/openhab.conf ]
+if [ -f $CONFIG_DIR/openhab.cfg ]
 then
   echo configuration found.
   rm -rf /tmp/demo-openhab*

@@ -1,32 +1,33 @@
-# Openhab 1.6.1
+# Openhab 1.7.1
 # * configuration is injected
-FROM tweyand/ubuntu-base
-MAINTAINER Tim Weyand <tim.weyand@me.com>
+#
+FROM java:openjdk-8-jdk
+MAINTAINER Tom Deckers <tom@ducbase.com>
 
-ENV OPENHAB_VERSION 1.6.1
+ENV DEBIAN_FRONTEND noninteractive
 
-# Install.
-RUN apt-get install -y supervisor oracle-java8-installer
+RUN apt-get -y update \
+  && apt-get -y upgrade \
+  && apt-get -y install unzip supervisor wget
 
-ADD files /root/docker-files/
+RUN apt-get update && apt-get -y upgrade && apt-get -y install unzip supervisor wget
 
-RUN \
-  chmod +x /root/docker-files/scripts/download_openhab.sh  && \
-  cp /root/docker-files/pipework /usr/local/bin/pipework && \
-  cp /root/docker-files/supervisord.conf /etc/supervisor/supervisord.conf && \
-  cp /root/docker-files/openhab.conf /etc/supervisor/conf.d/openhab.conf && \
-  cp /root/docker-files/boot.sh /usr/local/bin/boot.sh && \
-  cp /root/docker-files/openhab-restart /etc/network/if-up.d/openhab-restart && \
-  mkdir -p /opt/openhab/logs && \
-  chmod +x /usr/local/bin/pipework && \
-  chmod +x /usr/local/bin/boot.sh && \
-  chmod +x /etc/network/if-up.d/openhab-restart && \
-  rm -rf /tmp/*
+ENV OPENHAB_VERSION 1.7.1
 
 #
 # Download openHAB based on Environment OPENHAB_VERSION
 #
-RUN /root/docker-files/scripts/download_openhab.sh
+COPY files/scripts/download_openhab.sh /root/
+RUN /root/download_openhab.sh
+
+COPY files/pipework /usr/local/bin/pipework
+COPY files/supervisord.conf /etc/supervisor/supervisord.conf
+COPY files/openhab.conf /etc/supervisor/conf.d/openhab.conf
+COPY files/openhab_debug.conf /etc/supervisor/conf.d/openhab_debug.conf
+COPY files/boot.sh /usr/local/bin/boot.sh
+COPY files/openhab-restart /etc/network/if-up.d/openhab-restart
+
+RUN mkdir -p /opt/openhab/logs
 
 EXPOSE 8080 8443 5555 9001
 
