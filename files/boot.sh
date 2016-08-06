@@ -35,8 +35,9 @@ function addons {
       echo link created.
     else 
       if [ -f $SOURCE/$STRING-*.jar ]
-      ln -s $SOURCE/$STRING-*.jar $DEST/
-      echo link created.
+      then
+        ln -s $SOURCE/$STRING-*.jar $DEST/
+        echo link created.
       fi
       echo not found.
     fi
