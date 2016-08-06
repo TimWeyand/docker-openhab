@@ -76,7 +76,7 @@ fi
 
 ETH0_FOUND=`grep "eth0" /proc/net/dev`
 
-if [ -n "$ETH0_FOUND" ] ;
+if [ -n "$PIPEWORK" ] ;
 then 
   # We're in a container with regular eth0 (default)
   exec /usr/bin/supervisord -c /etc/supervisor/supervisord.conf
