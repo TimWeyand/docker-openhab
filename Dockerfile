@@ -11,7 +11,6 @@ RUN apt-get -y update \
   && apt-get -y install unzip supervisor wget
 
 ENV OPENHAB_VERSION 1.8.3
-ENV PIPEWORK 0
 
 #
 # Download openHAB based on Environment OPENHAB_VERSION
@@ -19,7 +18,6 @@ ENV PIPEWORK 0
 COPY files/scripts/download_openhab.sh /root/
 RUN /root/download_openhab.sh
 
-COPY files/pipework /usr/local/bin/pipework
 COPY files/supervisord.conf /etc/supervisor/supervisord.conf
 COPY files/openhab.conf /etc/supervisor/conf.d/openhab.conf
 COPY files/openhab_debug.conf /etc/supervisor/conf.d/openhab_debug.conf
