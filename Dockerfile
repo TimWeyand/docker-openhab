@@ -11,6 +11,7 @@ RUN apt-get -y update \
   && apt-get -y install unzip supervisor wget
 
 ENV OPENHAB_VERSION 1.8.3
+ENV PIPEWORK 0
 
 #
 # Download openHAB based on Environment OPENHAB_VERSION
