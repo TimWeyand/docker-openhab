@@ -29,11 +29,15 @@ function addons {
   do
     STRING=${STRING%$'\r'}
     echo Processing $STRING...
-    if [ -f $SOURCE/$STRING-*.jar ]
+    if [ -f $SOURCE/$STRING-$OPENHAB_VERSION.jar ]
     then
+      ln -s $SOURCE/$STRING-$OPENHAB_VERSION.jar $DEST/
+      echo link created.
+    else 
+      if [ -f $SOURCE/$STRING-*.jar ]
       ln -s $SOURCE/$STRING-*.jar $DEST/
       echo link created.
-    else
+      fi
       echo not found.
     fi
   done < "$ADDONFILE"
