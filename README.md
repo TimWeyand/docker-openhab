@@ -35,6 +35,7 @@ Environment Variables
 =======
 Docker Environment Variables to change the default behaviour, described in this file
 
+* OPENHAB_IP - Set the IP openHAB should listen to, this is usefull if you use "--net host" and have more than one ip adress attached to the host (Default: 0.0.0.0) 
 * OPENHAB_VERSION - openHAB Version which should be used (Default: 1.8.3)
 * OPENHAB_HTTP_PORT - openHAB HTTP Port
 * OPENHAB_HTTPS_PORT - openHAB HTTPS Port
@@ -113,6 +114,8 @@ docker run -d  \
        --name openhab_1.8.3 \
        --restart always \
        --net host \
+       -e "OPENHAB_IP=192.168.0.100" \
+       -e "OPENHAB_HTTP_PORT=80"
        -v [Host-Filesystem]/DockerData/openhab/conf:/etc/openhab \
        -v [Host-Filesystem]/DockerData/openhab/logs:/opt/openhab/logs \
        -v [Host-Filesystem]/DockerData/openhab/etc:/opt/openhab/etc \
