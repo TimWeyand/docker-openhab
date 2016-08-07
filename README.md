@@ -31,6 +31,16 @@ The openHAB Docker expects you to map a configurations directory on the host to 
 * /opt/openhab/webapps/static - Folder for uuid & secret for http://my.openhab.org
 * /opt/openhab/etc - Folder for data like db4o and rr4jd
 
+Environment Variables
+=======
+Docker Environment Variables to change the default behaviour, described in this file
+
+* OPENHAB_VERSION - openHAB Version which should be used (Default: 1.8.3)
+* OPENHAB_HTTP_PORT - openHAB HTTP Port
+* OPENHAB_HTTPS_PORT - openHAB HTTPS Port
+* OPENHAB_TELNET_PORT - openHAB Telnet Port
+* SUPERVISORED_PORT - supervisord HTTP Port
+
 Timezone
 ======
 You can add a timezone file in the configurations directory, which will be placed in /etc/timezone. Default: UTC
@@ -66,6 +76,10 @@ org.openhab.persistence.rrd4j
 KNX Binding (Network)
 =====
 If you are running the KNX Binding, you might have problems to connect to your Router. You might need to use the network host to get it working.
+
+openHAB Application Configuration
+=====
+Please see the official documentation at http://www.openhab.org
 
 Examples
 =====
