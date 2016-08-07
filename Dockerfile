@@ -1,8 +1,9 @@
-# Openhab 1.7.1
+# Openhab 1.8.3
 # * configuration is injected
-#
+# - based on the Image of Tom Deckers <tom@ducbase.com>
+
 FROM java:openjdk-8-jdk
-MAINTAINER Tom Deckers <tom@ducbase.com>
+MAINTAINER Tim Weyand <tim.weyand@me.com>
 
 ENV DEBIAN_FRONTEND noninteractive
 
@@ -11,6 +12,7 @@ RUN apt-get -y update \
   && apt-get -y install unzip supervisor wget
 
 ENV OPENHAB_VERSION 1.8.3
+ENV OPENHAB_IP 0.0.0.0
 ENV OPENHAB_HTTP_PORT 8080
 ENV OPENHAB_HTTPS_PORT 8443
 ENV OPENHAB_TELNET_PORT 5555
@@ -28,11 +30,17 @@ COPY files/openhab_debug.conf /etc/supervisor/conf.d/openhab_debug.conf
 COPY files/boot.sh /usr/local/bin/boot.sh
 COPY files/openhab-restart /etc/network/if-up.d/openhab-restart
 
-RUN mkdir -p /opt/openhab/logs
+RUN mkdir -p /opt/openhab/logs \
+    sed -e "s/\$SUPERVISORED_PORT/$SUPERVISORED_PORT/g" /etc/supervisor/supervisord.conf > /etc/supervisor/supervisord.conf \
+    sed -e "s/\$OPENHAB_HTTP_PORT/$OPENHAB_HTTP_PORT/g" /etc/supervisor/conf.d/openhab.conf > /etc/supervisor/conf.d/openhab.conf \
+    sed -e "s/\$OPENHAB_HTTPS_PORT/$OPENHAB_HTTPS_PORT/g" /etc/supervisor/conf.d/openhab.conf > /etc/supervisor/conf.d/openhab.conf \
+    sed -e "s/\$OPENHAB_TELNET_PORT/$OPENHAB_TELNET_PORT/g" /etc/supervisor/conf.d/openhab.conf > /etc/supervisor/conf.d/openhab.conf \
+    sed -e "s/\$OPENHAB_HTTP_PORT/$OPENHAB_HTTP_PORT/g" /etc/supervisor/conf.d/openhab_debug.conf > /etc/supervisor/conf.d/openhab_debug.conf \
+    sed -e "s/\$OPENHAB_HTTPS_PORT/$OPENHAB_HTTPS_PORT/g" /etc/supervisor/conf.d/openhab_debug.conf > /etc/supervisor/conf.d/openhab_debug.conf \
+    sed -e "s/\$OPENHAB_TELNET_PORT/$OPENHAB_TELNET_PORT/g" /etc/supervisor/conf.d/openhab_debug.conf > /etc/supervisor/conf.d/openhab_debug.conf \
+    sed -e "s/\$OPENHAB_IP/$OPENHAB_IP/g" /etc/supervisor/supervisord.conf > /etc/supervisor/supervisord.conf \
+    sed -e "s/\$OPENHAB_IP/$OPENHAB_IP/g" /etc/supervisor/conf.d/openhab.conf > /etc/supervisor/conf.d/openhab.conf
 
-EXPOSE $OPENHAB_HTTP_PORT 
-EXPOSE $OPENHAB_HTTPS_PORT 
-EXPOSE $OPENHAB_TELNET_PORT 
-EXPOSE $SUPERVISORED_PORT
+EXPOSE 8080 8443 5555 9001
 
 CMD ["/usr/local/bin/boot.sh"]
