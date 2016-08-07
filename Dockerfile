@@ -30,17 +30,20 @@ COPY files/openhab_debug.conf /etc/supervisor/conf.d/openhab_debug.conf
 COPY files/boot.sh /usr/local/bin/boot.sh
 COPY files/openhab-restart /etc/network/if-up.d/openhab-restart
 
-RUN mkdir -p /opt/openhab/logs \
-    sed -e "s/\$SUPERVISORED_PORT/$SUPERVISORED_PORT/g" /etc/supervisor/supervisord.conf > /etc/supervisor/supervisord.conf \
-    sed -e "s/\$OPENHAB_HTTP_PORT/$OPENHAB_HTTP_PORT/g" /etc/supervisor/conf.d/openhab.conf > /etc/supervisor/conf.d/openhab.conf \
-    sed -e "s/\$OPENHAB_HTTPS_PORT/$OPENHAB_HTTPS_PORT/g" /etc/supervisor/conf.d/openhab.conf > /etc/supervisor/conf.d/openhab.conf \
-    sed -e "s/\$OPENHAB_TELNET_PORT/$OPENHAB_TELNET_PORT/g" /etc/supervisor/conf.d/openhab.conf > /etc/supervisor/conf.d/openhab.conf \
-    sed -e "s/\$OPENHAB_HTTP_PORT/$OPENHAB_HTTP_PORT/g" /etc/supervisor/conf.d/openhab_debug.conf > /etc/supervisor/conf.d/openhab_debug.conf \
-    sed -e "s/\$OPENHAB_HTTPS_PORT/$OPENHAB_HTTPS_PORT/g" /etc/supervisor/conf.d/openhab_debug.conf > /etc/supervisor/conf.d/openhab_debug.conf \
-    sed -e "s/\$OPENHAB_TELNET_PORT/$OPENHAB_TELNET_PORT/g" /etc/supervisor/conf.d/openhab_debug.conf > /etc/supervisor/conf.d/openhab_debug.conf \
-    sed -e "s/\$OPENHAB_IP/$OPENHAB_IP/g" /etc/supervisor/supervisord.conf > /etc/supervisor/supervisord.conf \
-    sed -e "s/\$OPENHAB_IP/$OPENHAB_IP/g" /etc/supervisor/conf.d/openhab.conf > /etc/supervisor/conf.d/openhab.conf
+RUN mkdir -p /opt/openhab/logs; \
+    sed -e "s/\$SUPERVISORED_PORT/$SUPERVISORED_PORT/g" /etc/supervisor/supervisord.conf > /etc/supervisor/supervisord.conf; \
+    sed -e "s/\$OPENHAB_HTTP_PORT/$OPENHAB_HTTP_PORT/g" /etc/supervisor/conf.d/openhab.conf > /etc/supervisor/conf.d/openhab.conf; \
+    sed -e "s/\$OPENHAB_HTTPS_PORT/$OPENHAB_HTTPS_PORT/g" /etc/supervisor/conf.d/openhab.conf > /etc/supervisor/conf.d/openhab.conf; \
+    sed -e "s/\$OPENHAB_TELNET_PORT/$OPENHAB_TELNET_PORT/g" /etc/supervisor/conf.d/openhab.conf > /etc/supervisor/conf.d/openhab.conf; \
+    sed -e "s/\$OPENHAB_HTTP_PORT/$OPENHAB_HTTP_PORT/g" /etc/supervisor/conf.d/openhab_debug.conf > /etc/supervisor/conf.d/openhab_debug.conf; \
+    sed -e "s/\$OPENHAB_HTTPS_PORT/$OPENHAB_HTTPS_PORT/g" /etc/supervisor/conf.d/openhab_debug.conf > /etc/supervisor/conf.d/openhab_debug.conf; \
+    sed -e "s/\$OPENHAB_TELNET_PORT/$OPENHAB_TELNET_PORT/g" /etc/supervisor/conf.d/openhab_debug.conf > /etc/supervisor/conf.d/openhab_debug.conf; \
+    sed -e "s/\$OPENHAB_IP/$OPENHAB_IP/g" /etc/supervisor/supervisord.conf > /etc/supervisor/supervisord.conf; \
+    sed -e "s/\$OPENHAB_IP/$OPENHAB_IP/g" /etc/supervisor/conf.d/openhab.conf > /etc/supervisor/conf.d/openhab.conf;
 
-EXPOSE 8080 8443 5555 9001
+EXPOSE $OPENHAB_HTTP_PORT
+EXPOSE $OPENHAB_HTTPS_PORT
+EXPOSE $OPENHAB_TELNET_PORT
+EXPOSE $SUPERVISORED_PORT
 
 CMD ["/usr/local/bin/boot.sh"]
