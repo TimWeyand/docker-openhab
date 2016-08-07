@@ -1,7 +1,7 @@
 Overview
 ========
 
-Docker image for Openhab (1.8.3). Included is JRE 1.8.45.
+Docker image for Openhab (1.7.1). Included is JRE 1.8.45.
 
 Based on the Image of tdeckers/docker-openhab
 
@@ -36,7 +36,7 @@ Environment Variables
 Docker Environment Variables to change the default behaviour, described in this file
 
 * OPENHAB_IP - Set the IP openHAB should listen to, this is usefull if you use "--net host" and have more than one ip adress attached to the host (Default: 0.0.0.0) 
-* OPENHAB_VERSION - openHAB Version which should be used (Default: 1.8.3)
+* OPENHAB_VERSION - openHAB Version which should be used (Default: 1.7.1)
 * OPENHAB_HTTP_PORT - openHAB HTTP Port
 * OPENHAB_HTTPS_PORT - openHAB HTTPS Port
 * OPENHAB_TELNET_PORT - openHAB Telnet Port
@@ -111,7 +111,7 @@ docker run -d \
 Example: Configuration which is working for me with KNX
 ```
 docker run -d  \
-       --name openhab_1.8.3 \
+       --name openhab_1.7.1 \
        --restart always \
        --net host \
        -e "OPENHAB_IP=192.168.0.100" \
