@@ -3,27 +3,46 @@ Overview
 
 Docker image for Openhab (1.8.3). Included is JRE 1.8.45.
 
-
-Official DEMO Included
-========
-
-If you do not have a openHAB configuration yet, you can start this Docker without one. The official openHAB DEMO will be started. 
+Based on the Image of tdeckers/docker-openhab
 
 PULL
 =======
-```docker pull tdeckers/openhab```
+```docker pull tweyand/openhab```
 
 Building
 ========
 
 ```docker build -t <username>/openhab .```
 
-Running
-=======
 
-* The image exposes openHAB ports 8080, 8443, 5555 and 9001 (supervisord).
-* It expects you to map a configurations directory on the host to /etc/openhab. This allows you to inject your openhab configuration into the container (see example below).
-* To enable specific plugins, add a file with name addons.cfg in the configuration directory which lists all addons you want to add.
+Exposed Ports
+=======
+* 8080 - openHAB HTTP Webinterface
+* 8443 - openHAB HTTPS Webinterface
+* 5555 - openHAB TELNET Interface
+* 9001 - supervisord Webinterface
+
+Folders 
+=======
+The openHAB Docker expects you to map a configurations directory on the host to /etc/openhab. This allows you to inject your openhab configuration into the container (see example below). If you do not map your configurations, the Oficial Demo will be loaded.
+
+* /etc/openhab - openHAB configuration
+* /opt/openhab/logs - openHAB logs
+* /opt/openhab/webapps/static - Folder for uuid & secret for http://my.openhab.org
+* /opt/openhab/etc - Folder for data like db4o and rr4jd
+
+Timezone
+======
+You can add a timezone file in the configurations directory, which will be placed in /etc/timezone. Default: UTC
+
+Example content for timezone:
+```
+Europe/Brussels
+```
+
+Addons
+======
+To enable specific plugins, add a file with name addons.cfg in the configuration directory which lists all addons you want to add.
 
 Example content for addons.cfg:
 ```
@@ -44,30 +63,49 @@ org.openhab.persistence.gcal
 org.openhab.persistence.rrd4j
 ```
 
-* The openHAB process is managed using supervisord.  You can manage the process (and view logs) by exposing port 9001. From there it is possible to switch between NORMAL and DEBUG versions of OpenHAB runtime.
-* The container supports starting without network (--net="none"), and adding network interfaces using pipework.
-* You can add a timezone file in the configurations directory, which will be placed in /etc/timezone. Default: UTC
+KNX Binding (Network)
+=====
+If you are running the KNX Binding, you might have problems to connect to your Router. You might need to use the network host to get it working.
 
-Example content for timezone:
+Examples
+=====
+
+Example: run command (with Demo)
 ```
-Europe/Brussels
+docker run -d -p 8080:8080 tweyand/openhab
 ```
 
 Example: run command (with your openHAB config)
 ```
-docker run -d -p 8080:8080 -v /tmp/configuration:/etc/openhab/ tdeckers/openhab
+docker run -d \
+       -p 8080:8080 
+       -v [Host-Filesystem-Configuration-Folder]:/etc/openhab/ \
+       tweyand/openhab
 ```
-
 
 Example: Map configuration and logging directory as well as allow access to Supervisor:
 ```
-docker run -d -p 8080:8080 -p 9001:9001 -v /tmp/configurations/:/etc/openhab -v /tmp/logs:/opt/openhab/logs tdeckers/openhab
+docker run -d \
+       -p 8080:8080 
+       -p 9001:9001 
+       -v [Host-Filesystem]/DockerData/openhab/conf:/etc/openhab \
+       -v [Host-Filesystem-Logs-Folder]:/opt/openhab/logs \
+       tweyand/openhab
 ```
 
-Example: run command (with Demo)
+Example: Configuration which is working for me with KNX
 ```
-docker run -d -p 8080:8080 tdeckers/openhab
+docker run -d  \
+       --name openhab_1.8.3 \
+       --restart always \
+       --net host \
+       -v [Host-Filesystem]/DockerData/openhab/conf:/etc/openhab \
+       -v [Host-Filesystem]/DockerData/openhab/logs:/opt/openhab/logs \
+       -v [Host-Filesystem]/DockerData/openhab/etc:/opt/openhab/etc \
+       -v [Host-Filesystem]/DockerData/openhab/webapps/static:/opt/openhab/webapps/static \
+       tweyand/openhab
 ```
+
 
 Start the Demo with: 
 ```
