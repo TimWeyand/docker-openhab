@@ -11,7 +11,7 @@ RUN apt-get -y update \
   && apt-get -y upgrade \
   && apt-get -y install unzip supervisor wget
 
-ENV OPENHAB_VERSION 1.8.3
+ENV OPENHAB_VERSION 1.7.1
 ENV OPENHAB_IP 0.0.0.0
 ENV OPENHAB_HTTP_PORT 8080
 ENV OPENHAB_HTTPS_PORT 8443
