@@ -38,8 +38,8 @@ RUN mkdir -p /opt/openhab/logs; \
     sed -e "s/\$OPENHAB_HTTP_PORT/$OPENHAB_HTTP_PORT/g" /etc/supervisor/conf.d/openhab_debug-variables.conf > /etc/supervisor/conf.d/openhab_debug.conf; \
     sed -e "s/\$OPENHAB_HTTPS_PORT/$OPENHAB_HTTPS_PORT/g" /etc/supervisor/conf.d/openhab_debug-variables.conf > /etc/supervisor/conf.d/openhab_debug.conf; \
     sed -e "s/\$OPENHAB_TELNET_PORT/$OPENHAB_TELNET_PORT/g" /etc/supervisor/conf.d/openhab_debug-variables.conf > /etc/supervisor/conf.d/openhab_debug.conf; \
-    sed -e "s/\$OPENHAB_IP/$OPENHAB_IP/g" /etc/supervisor/supervisord-variables.conf > /etc/supervisor/supervisord.conf; \
-    sed -e "s/\$OPENHAB_IP/$OPENHAB_IP/g" /etc/supervisor/conf.d/openhab-variables.conf > /etc/supervisor/conf.d/openhab.conf; \
+    sed -e "s/\$OPENHAB_IP/$OPENHAB_IP/g" /etc/supervisor/supervisord.conf > /etc/supervisor/supervisord.conf; \
+    sed -e "s/\$OPENHAB_IP/$OPENHAB_IP/g" /etc/supervisor/conf.d/openhab.conf > /etc/supervisor/conf.d/openhab.conf; \
     cat /etc/supervisor/supervisord.conf;
 
 EXPOSE $OPENHAB_HTTP_PORT
