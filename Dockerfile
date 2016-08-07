@@ -35,9 +35,6 @@ RUN mkdir -p /opt/openhab/logs; \
     sed -e "s/\$OPENHAB_IP/$OPENHAB_IP/g" -e "s/\$OPENHAB_HTTP_PORT/$OPENHAB_HTTP_PORT/g" -e "s/\$OPENHAB_HTTPS_PORT/$OPENHAB_HTTPS_PORT/g" -e "s/\$OPENHAB_TELNET_PORT/$OPENHAB_TELNET_PORT/g" /etc/supervisor/conf.d/openhab.variables-conf > /etc/supervisor/conf.d/openhab.conf; \
     sed -e "s/\$OPENHAB_IP/$OPENHAB_IP/g" -e "s/\$OPENHAB_HTTP_PORT/$OPENHAB_HTTP_PORT/g" -e "s/\$OPENHAB_HTTPS_PORT/$OPENHAB_HTTPS_PORT/g" -e "s/\$OPENHAB_TELNET_PORT/$OPENHAB_TELNET_PORT/g" /etc/supervisor/conf.d/openhab_debug.variables-conf > /etc/supervisor/conf.d/openhab_debug.conf;
 
-EXPOSE $OPENHAB_HTTP_PORT
-EXPOSE $OPENHAB_HTTPS_PORT
-EXPOSE $OPENHAB_TELNET_PORT
-EXPOSE $SUPERVISORED_PORT
+EXPOSE $OPENHAB_HTTP_PORT $OPENHAB_HTTPS_PORT $OPENHAB_TELNET_PORT $SUPERVISORED_PORT
 
 CMD ["/usr/local/bin/boot.sh"]
