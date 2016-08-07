@@ -30,6 +30,9 @@ COPY files/openhab-restart /etc/network/if-up.d/openhab-restart
 
 RUN mkdir -p /opt/openhab/logs
 
-EXPOSE 8080 8443 5555 9001
+EXPOSE $OPENHAB_HTTP_PORT 
+EXPOSE $OPENHAB_HTTPS_PORT 
+EXPOSE $OPENHAB_TELNET_PORT 
+EXPOSE $SUPERVISORED_PORT
 
 CMD ["/usr/local/bin/boot.sh"]
