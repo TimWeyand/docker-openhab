@@ -11,6 +11,10 @@ RUN apt-get -y update \
   && apt-get -y install unzip supervisor wget
 
 ENV OPENHAB_VERSION 1.8.3
+ENV OPENHAB_HTTP_PORT 8080
+ENV OPENHAB_HTTPS_PORT 8443
+ENV OPENHAB_TELNET_PORT 5555
+ENV SUPERVISORED_PORT 9001
 
 #
 # Download openHAB based on Environment OPENHAB_VERSION
