@@ -7,12 +7,12 @@ Based on the Image of tdeckers/docker-openhab
 
 PULL
 =======
-```docker pull tweyand/openhab```
+```docker pull tweyand/openhab:latest```
 
 Building
 ========
 
-```docker build -t <username>/openhab .```
+```docker build -t <username>/openhab:latest .```
 
 
 Exposed Ports
@@ -37,10 +37,10 @@ Docker Environment Variables to change the default behaviour, described in this 
 
 * OPENHAB_IP - Set the IP openHAB should listen to, this is usefull if you use "--net host" and have more than one ip adress attached to the host (Default: 0.0.0.0) 
 * OPENHAB_VERSION - openHAB Version which should be used (Default: 1.8.3)
-* OPENHAB_HTTP_PORT - openHAB HTTP Port
-* OPENHAB_HTTPS_PORT - openHAB HTTPS Port
-* OPENHAB_TELNET_PORT - openHAB Telnet Port
-* SUPERVISORED_PORT - supervisord HTTP Port
+* OPENHAB_HTTP_PORT - openHAB HTTP Port (Default: 8080)
+* OPENHAB_HTTPS_PORT - openHAB HTTPS Port (Default: 8443)
+* OPENHAB_TELNET_PORT - openHAB Telnet Port (Default: 5555)
+* SUPERVISORED_PORT - supervisord HTTP Port (Default:9001)
 
 Timezone
 ======
